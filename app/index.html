@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+    <link rel="stylesheet" href="stylesheet/main.css">
+</head>
+<body>
+    <div class="container" data-ng-controller="mainCtrl">
+        <h2 class="page-header">Progress Bars</h2>
+        <h4>Limt : {{progressBar.limit}}</h4>
+        <h5 class="selected-progressbar">Selected Progress Bar :  {{selectedProgressBar.name}}</h5>
+        <!-- Progress bar -->
+        <div class="progressBar" data-ng-repeat="data in progressBar.data">
+            <span class="progressBar-text">{{data.barValue}}%</span>
+            <div data-ng-class="data.barValue > 99 ? 'progress-success' : 
+                    (data.barValue >= 40 && data.barValue < 70 ? 'progress-warning' : 
+                    (data.barValue >= 70 && data.barValue <= 99 ? 'progress-info' : 'progress-danger'))" 
+                    data-ng-style="data.style"></div>
+        </div>
+        <!-- Button -->
+        <div>
+            <select data-ng-model="selectedProgressBar" data-ng-options="value.name for (key, value) in progressBar.data">
+            </select>
+            <span data-ng-repeat="item in progressBar.buttons | orderBy: item">
+                <button value="{{item}}" data-ng-click="updateProgressBarStatus(item)" class="btn btn-primary">{{item}}</button>
+            </span>
+        </div>
+        
+    </div>
+
+    <script src="bower_components/angular/angular.min.js"></script>
+    <script src="script/main.js"></script>
+    <script src="script/app-bootstrap.js"></script>
+    <script src="script/main-service.js"></script>
+    <script src="script/main-ctrl.js"></script>
+</body>
+</html>
